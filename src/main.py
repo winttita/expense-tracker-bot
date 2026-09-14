@@ -33,11 +33,14 @@ async def _inicializar(app: Application) -> None:
 
 
 def main() -> None:
+    import sys
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
-    config = cargar_config()
+    env_file = sys.argv[1] if len(sys.argv) > 1 else None
+    config = cargar_config(env_file)
 
     app = Application.builder().token(config.telegram_bot_token).build()
     app.bot_data["config"] = config
